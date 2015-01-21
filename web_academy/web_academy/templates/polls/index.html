@@ -1,0 +1,35 @@
+<style type="text/css">
+	.question{
+		color: blue;
+		font-size: 24;
+		font-style: italic;
+	}
+</style>
+
+<div class='question'>
+<form "{% url 'polls:index' %}" method='GET'>
+	<input type="text"/ name="question_text"/>
+	<input type="submit"/>
+
+</form>
+{% if error %}
+	<p>{{ error }}</p>
+{% endif %}
+<form action="{% url 'polls:index' %}" method="POST">
+	{% csrf_token %}
+
+	<label for="question_text">Question text</label>
+	<input type="text" name='question_text'/>
+
+	<label for="pub_date">Date published</label>
+	<input type="text" name="pub_date"/>
+
+	<input type='submit'/>
+</form>
+
+{% for question in question_list %}
+	<a href="{% url 'polls:detail' q_id=question.id %}">
+		<p>{{ question.question_text }}</p>
+	</a>
+{% endfor %}
+</div>
